@@ -24,11 +24,11 @@ class UniquesOnlyTests(unittest.TestCase):
         self.assertIterableEqual(uniques_only([1, 2, 2, 1, 1, 2, 1]), [1, 2])
 
     def test_accepts_iterator(self):
-        nums = (n**2 for n in [1, 2, 3])
+        nums = (n ** 2 for n in [1, 2, 3])
         self.assertIterableEqual(uniques_only(nums), [1, 4, 9])
 
     # To test the Bonus part of this exercise, comment out the following line
-    @unittest.expectedFailure
+    # @unittest.expectedFailure
     def test_returns_iterator(self):
         nums = iter([1, 2, 3])
         output = uniques_only(nums)
@@ -45,7 +45,7 @@ class UniquesOnlyTests(unittest.TestCase):
     # To test the Bonus part of this exercise, comment out the following line
     @unittest.expectedFailure
     def test_hashable_types_faster(self):
-        hashables = [(n, n+1) for n in range(1000)] + [0]
+        hashables = [(n, n + 1) for n in range(1000)] + [0]
         unhashables = [[n] for n in range(1000)] + [0]
         with Timer() as hashable:
             for _ in uniques_only(hashables):
