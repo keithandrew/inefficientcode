@@ -1,8 +1,8 @@
 def uniques_only(iterator):
-    unique_set = set()
+    uniques = []
 
-    while True:
-        for num in iterator:
-            unique_set.add(num)
+    for item in iterator:
+        if item not in uniques:
+            uniques.append(item)
 
-        return iter(unique_set)
+    return iter(uniques)

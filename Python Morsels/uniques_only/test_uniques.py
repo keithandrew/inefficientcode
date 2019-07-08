@@ -37,7 +37,7 @@ class UniquesOnlyTests(unittest.TestCase):
         self.assertEqual(next(nums), 2)
 
     # To test the Bonus part of this exercise, comment out the following line
-    @unittest.expectedFailure
+    # @unittest.expectedFailure
     def test_accepts_nonhashable_types(self):
         output = uniques_only([[1, 2], [3], [1], [3]])
         self.assertIterableEqual(output, [[1, 2], [3], [1]])
