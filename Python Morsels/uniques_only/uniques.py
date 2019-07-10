@@ -1,7 +1,10 @@
 def uniques_only(iterator):
-    unique_set = set()
+    unique_set = []
+    unique_test = set()
 
-    for num in iterator:
-        unique_set.add(num)
+    for item in iterator:
+        if item not in unique_test:
+            unique_set.append(item)
+            unique_test.add(item)
 
     return unique_set
