@@ -1,11 +1,11 @@
 def get_earliest(*args):
-
-    """Takes in an arbitrary number of datestrings in american format (mm/dd/yyyy) \
-    and returns the earliest"""
+    """Takes in an arbitrary number of datestrings in american
+    format (mm/dd/yyyy) and returns the earliest"""
 
     date_list = []
     lowest = ""
     tie = "There is a tie between:\n"
+
     for x in args:
         date_list.append(x.split("/"))
     levels = [list(j) for j in zip(*date_list)]
