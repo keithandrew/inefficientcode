@@ -6,17 +6,28 @@ import csv
 parser = argparse.ArgumentParser(description="Fix csv file")
 parser.add_argument("source", type=str, help="Source CSV file for cleaning")
 parser.add_argument("output", type=str, help="Cleaned CSV file for output")
-
+parser.add_argument('--in-delimiter', type=str, help="Manually specify delimiter")
+parser.add_argument('--in-quote', type=str, help="Manually specify delimiter")
 args = parser.parse_args()
-
-# test the CLI
-print(args.source)
-print(args.output)
 
 # open a csv file and print test output
 with open(args.source) as csvfile:
-    reader = csv.reader(csvfile)
-    for row in reader:
-        print(row)
 
-print(args.output)
+    arguments = {}
+
+    if args.in_delimiter:
+        arguments["delimiter"] = args.in_delimiter
+
+    if args.in_quote:
+        arguments["quotechar"] = args.in_quote
+
+    if not args.in_delimiter and not args.in_quote:
+        arguments["dialect"] = csv.Sniffer().sniff(csvfile.read())
+        csvfile.seek(0)
+
+    reader = csv.reader(csvfile, **arguments)
+
+    # write new csvfile
+    with open(args.output, "w", newline="") as csv_output:
+        writer = csv.writer(csv_output)
+        writer.writerows(row for row in reader)
