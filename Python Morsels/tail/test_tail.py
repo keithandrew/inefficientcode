@@ -1,7 +1,7 @@
 import unittest
 
 
-from tail import tail
+from tail_v4 import tail
 
 
 class TailTests(unittest.TestCase):

@@ -11,5 +11,5 @@ def tail(sequence, n):
     if n <= 0:  # return empty list if n < 0
         return tail
     else:
-        tail = sequence[-n:]  # this implementation fails on processing strings
+        tail = [position for position in sequence[-n:]]
         return tail
