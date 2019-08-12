@@ -11,8 +11,9 @@ def tail(sequence, n):
     if n <= 0:  # return empty list if n < 0
         return tail
     else:
-        tail = sequence[-n:]
+        for position in sequence[-n:]:
+            tail.append(position)
         return tail
 
 
-print(tail('hello', 0))
+print(tail('hello', 2))
