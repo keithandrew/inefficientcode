@@ -1,7 +1,7 @@
 class Node:
     """docstring for Node.data"""
 
-    def __init__(self, data=0):
+    def __init__(self, data=None):
         self.data = data
         self.next = None
         self.previous = None
@@ -14,13 +14,18 @@ class LinkedList:
     """docstring for LinkedList."""
 
     def __init__(self):
-        self.head_value = None
+        self.head = None
         self.current_node = None
 
     def add_node(self, value):
-        if not self.head_value:
-            self.head_value = Node(value)
-            self.current_node = self.head_value
+        if not self.head:
+            self.head = Node(value)
+            self.current_node = self.head
+            self.current_node.previous = None
+        elif not self.current_node:
+            self.current_node = Node(value)
+            self.current_node.next = self.head
+            self.head = self.current_node
             self.current_node.previous = None
         else:
             new_node = Node(value)
@@ -35,7 +40,7 @@ class LinkedList:
         self.reset()
 
     def reset(self):
-        self.current_node = self.head_value
+        self.current_node = self.head
 
     def next(self):
         if self.current_node:
@@ -53,7 +58,7 @@ class LinkedList:
 
     def list_print(self):
         node_list = []
-        current_node = self.head_value
+        current_node = self.head
 
         while current_node is not None:
             node_list.append(current_node)
@@ -63,7 +68,7 @@ class LinkedList:
 
     def list_length(self):
         listLength = 0
-        current_node = self.head_value
+        current_node = self.head
 
         while current_node:
             listLength += 1
@@ -85,7 +90,7 @@ class LinkedList:
         while self.current_node:
             if self.current_node.data == term:
                 print(f"{term} found at index {index}")
-                return True
+                return self.current_node
             self.next()
             index += 1
 
@@ -94,8 +99,39 @@ class LinkedList:
             self.next()
         return self.current_node
 
+    def insert_node_after(self, index, datum):
+        self.locate(index)
+        next_node = self.current_node.next
+        self.add_node(datum)
+        self.current_node.next = next_node
+
+    def insert_node_at(self, index, datum):
+        self.locate(index)
+        next_node = self.current_node
+        self.current_node = self.current_node.previous
+        self.add_node(datum)
+        self.current_node.next = next_node
+
+    def insert_at_end(self, datum):
+        self.last_node()
+        self.add_node(datum)
+
+    def replace_node(self, index, datum):
+        self.locate(index)
+        print(self.current_node)
+        self.current_node.data = datum
+
 
 testList = LinkedList()
 testList.build([2, 4, 6, 8, 10, 12, 14, 16, 18])
+testList.insert_node_after(5, 22)
+testList.insert_node_at(1, 17)
+testList.replace_node(5, 15)
+testList.search(15)
+print(testList.locate(1))
 testList.list_print()
-testList.search(16)
+print(testList.current_node)
+testList.next()
+print(testList.current_node)
+testList.insert_at_end(78)
+testList.list_print()
