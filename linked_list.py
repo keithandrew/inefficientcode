@@ -79,6 +79,16 @@ class LinkedList:
             index += 1
         return self.current_node
 
+    def search(self, term):
+        index = 1
+        self.reset()
+        while self.current_node:
+            if self.current_node.data == term:
+                print(f"{term} found at index {index}")
+                return True
+            self.next()
+            index += 1
+
     def last_node(self):
         while self.current_node.next:
             self.next()
@@ -87,10 +97,5 @@ class LinkedList:
 
 testList = LinkedList()
 testList.build([2, 4, 6, 8, 10, 12, 14, 16, 18])
-print(testList.list_print())
-print(testList.current_node)
-print(testList.current_node.next)
-print(testList.last_node())
-print(testList.current_node)
-print(testList.locate(5))
-print(testList.current_node)
+testList.list_print()
+testList.search(16)
