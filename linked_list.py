@@ -48,20 +48,19 @@ class LinkedList:
         """
 
         if not self.head:  # if head node does not exist
-            self.head = Node(value)  # new node is assigned as head
+            self.head = Node(value)
             self.current_node = self.head
             self.current_node.previous = None
         elif not self.current_node:  # if inserting to "left" of head
             self.current_node = Node(value)
             self.current_node.next = self.head
-            self.head = self.current_node  # assigning new head node to head
+            self.head = self.current_node
             self.current_node.previous = None
         else:
-            new_node = Node(value)  # generate new Node object
-            previous_node = self.current_node  # assign current node as previous
-            self.current_node.next = new_node  # new_node assigned as current
+            new_node = Node(value)
+            previous_node = self.current_node
+            self.current_node.next = new_node
             self.current_node = new_node
-            # assign node.next; None by default, else next_node is passed by insert()
             self.current_node.next = next_node
             self.current_node.previous = previous_node
 
@@ -76,13 +75,13 @@ class LinkedList:
 
         for element in array:
             self.add_node(element)
-        self.reset()  # return to start of LinkedList once object is built
+        self.reset()
 
     def reset(self):
         """
         Method to reset position to start of LinkedList
         """
-        self.current_node = self.head  # returns to start by setting head as current
+        self.current_node = self.head
 
     def next(self):
         """
@@ -92,8 +91,8 @@ class LinkedList:
         """
 
         if self.current_node:
-            self.current_node = self.current_node.next  # set next as current
-            return self.current_node  # return the Node object
+            self.current_node = self.current_node.next
+            return self.current_node
         else:
             return None  # returns None if Node does not exist
 
@@ -105,8 +104,8 @@ class LinkedList:
         """
 
         if self.current_node:
-            self.current_node = self.current_node.previous  # set previous as current
-            return self.current_node  # returns the Node object
+            self.current_node = self.current_node.previous
+            return self.current_node
         else:
             return None  # return None if Node does not exist
 
@@ -116,11 +115,11 @@ class LinkedList:
             - Print() is called. No values are returned
         """
 
-        node_list = []  # storage for list of Nodes
+        node_list = []
         self.reset()
 
-        while self.current_node:  # loop to end of LinkedList
-            node_list.append(self.current_node)  # append Node to list
+        while self.current_node:
+            node_list.append(self.current_node)
             self.next()
 
         self.reset()
@@ -132,14 +131,14 @@ class LinkedList:
             - Returns listLength (int)
         """
 
-        listLength = 0  # tracker variable for length of LinkedList
+        listLength = 0
         self.reset()
 
         while self.current_node:
-            listLength += 1  # increment listLength
+            listLength += 1
             self.next()
 
-        return listLength  # returns length of the LinkedList
+        return listLength
 
     def locate(self, index):
         """
@@ -152,14 +151,14 @@ class LinkedList:
             index (int): index position of Node object to be accessed
         """
 
-        node_index = 1  # tracker variable for location of Node object
+        node_index = 1
         self.reset()
 
         while node_index < index:
             self.next()
             node_index += 1
 
-        return self.current_node  # returns the Node at the specified index
+        return self.current_node
 
     def search(self, value):
         """
@@ -172,15 +171,15 @@ class LinkedList:
             value (data): value of Node to be located. Will only match exact values
         """
 
-        node_index = 1  # tracker variable for location of Node object
+        node_index = 1
         self.reset()
 
         while self.current_node:
             if self.current_node.data == value:
                 print(f"{value} found at index {node_index}")
-                return self.current_node  # return Node containing search value
+                return self.current_node
             self.next()
-            node_index += 1  # increment index counter if not found
+            node_index += 1
 
     def last_node(self):
         """
@@ -201,9 +200,9 @@ class LinkedList:
             data (data): value to be assigned to inserted Node
         """
 
-        self.locate(index)  # sets target index as current_node
-        next_node = self.current_node.next  # retrieves next Node for reassignment
-        self.add_node(data, next_node)  # add Node into LinkedList
+        self.locate(index)
+        next_node = self.current_node.next
+        self.add_node(data, next_node)
 
     def insert_node_at(self, index, data):
         """
@@ -216,10 +215,10 @@ class LinkedList:
             data (data): data to be asigned to Node
         """
 
-        self.locate(index)  # sets target index as current_node
-        next_node = self.current_node  # set current_node as next, new value goes before
-        self.current_node = self.current_node.previous  # set previous to current_node
-        self.add_node(data, next_node)  # add new_node, between previous and next
+        self.locate(index)
+        next_node = self.current_node
+        self.current_node = self.current_node.previous
+        self.add_node(data, next_node)
 
     def insert_at_end(self, data):
         """
@@ -232,7 +231,7 @@ class LinkedList:
 
         """
 
-        self.last_node()  # traverse to end of LinkedList
+        self.last_node()
         self.add_node(data)
 
     def replace_node(self, index, data):
@@ -247,8 +246,40 @@ class LinkedList:
             data (data): data to be assigned to Node
         """
 
-        self.locate(index)  # set current_node to Node at target index
-        self.current_node.data = data  # overwrite previous data with new values
+        self.locate(index)
+        self.current_node.data = data
+
+    def remove_node(self, index):
+        """
+        Method to remove a Node from the LinkedList
+            - Method removes Node in place. No values are returned
+
+        Args:
+            index (int): index position of the Node to be removed
+        """
+        self.locate(index)
+
+        if self.current_node is self.head:
+            self.head = self.current_node.next
+            self.head.previous = None
+        elif self.current_node.next:
+            next_node = self.current_node.next
+            self.current_node = self.current_node.previous
+            self.current_node.next = next_node
+            next_node.previous = self.current_node
+        else:
+            self.current_node = self.current_node.previous
+            self.current_node.next = None
 
 
-help(LinkedList)
+test_list = LinkedList()
+test_list.build([1, 2, 3, 4, 5, 6, 7, 8, 9])
+test_list.list_print()
+test_list.remove_node(5)
+test_list.list_print()
+test_list.remove_node(1)
+test_list.list_print()
+test_list.remove_node(a)
+test_list.list_print()
+test_list.last_node()
+print(test_list.current_node)
