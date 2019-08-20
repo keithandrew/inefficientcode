@@ -270,16 +270,3 @@ class LinkedList:
         else:
             self.current_node = self.current_node.previous
             self.current_node.next = None
-
-
-test_list = LinkedList()
-test_list.build([1, 2, 3, 4, 5, 6, 7, 8, 9])
-test_list.list_print()
-test_list.remove_node(5)
-test_list.list_print()
-test_list.remove_node(1)
-test_list.list_print()
-test_list.remove_node(a)
-test_list.list_print()
-test_list.last_node()
-print(test_list.current_node)
