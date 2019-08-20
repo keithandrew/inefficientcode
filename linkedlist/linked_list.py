@@ -77,12 +77,6 @@ class LinkedList:
             self.add_node(element)
         self.reset()
 
-    def reset(self):
-        """
-        Method to reset position to start of LinkedList
-        """
-        self.current_node = self.head
-
     def next(self):
         """
         Method to traverse LinkedList
@@ -108,6 +102,20 @@ class LinkedList:
             return self.current_node
         else:
             return None  # return None if Node does not exist
+
+    def reset(self):
+        """
+        Method to reset position to start of LinkedList
+        """
+        self.current_node = self.head
+
+    def last_node(self):
+        """
+        Method to traverse LinkedList to last Node
+            - Sets current_node to last_node
+        """
+        while self.current_node.next:  # traverse list until next_node is None
+            self.next()
 
     def list_print(self):
         """
@@ -165,7 +173,7 @@ class LinkedList:
         Method to search LinkedList for a Node with specified value
             - Indexing starts at 1
             - Sets current_node to found Node
-            - Returns found Node object
+            - Returns node_index (int)
 
         Args:
             value (data): value of Node to be located. Will only match exact values
@@ -177,17 +185,9 @@ class LinkedList:
         while self.current_node:
             if self.current_node.data == value:
                 print(f"{value} found at index {node_index}")
-                return self.current_node
+                return node_index
             self.next()
             node_index += 1
-
-    def last_node(self):
-        """
-        Method to traverse LinkedList to last Node
-            - Sets current_node to last_node
-        """
-        while self.current_node.next:  # traverse list until next_node is None
-            self.next()
 
     def insert_node_after(self, index, data):
         """
