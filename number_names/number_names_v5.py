@@ -150,7 +150,7 @@ def gen_hundreds(number: int) -> str:
         elif tens:
             t = number_dict["single"][number // 100] + " Hundred and " + tens
         else:
-            t = number_dict["single"][number / 100] + " Hundred"
+            t = number_dict["single"][number // 100] + " Hundred"
 
     else:  # omit if 0
         t = ""  # by returning blank strings
