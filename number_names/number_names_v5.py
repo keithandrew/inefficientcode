@@ -3,8 +3,10 @@ This implementation supports numbers up to 999,999, negative integers as well as
 floating point number"""
 
 from decimal import Decimal
+from math import log10
+from typing import Union
 
-# set up the conversion dictionary
+# set up the vocabulary dictionary
 number_dict = {
     "single": {
         0: "Zero",
@@ -43,43 +45,42 @@ number_dict = {
 }
 
 
-def number_names(numeric_value: int) -> str:
-    """Takes in a number and returns it as a formatted text string"""
-
-    decimal_number = Decimal(str(abs(numeric_value))) % 1
-    whole_number = abs(int(numeric_value))
+def number_names(numeric_value: Union[int, float]) -> str:
+    """Returns a given integer value as a spelled out string representation"""
 
     if numeric_value < 0:  # check if number is negative
         if type(numeric_value) is float:  # check if number is integer or floating
-            number = "Negative " + generate_float(whole_number, decimal_number)
+            number = "Negative " + generate_float(abs(numeric_value))
         else:
-            number = "Negative " + generate_integer(whole_number)
+            number = "Negative " + generate_integer(abs(numeric_value))
 
     else:  # if not negative...
         if type(numeric_value) is float:  # check if number is integer or floating
-            number = generate_float(whole_number, decimal_number)
+            number = generate_float(numeric_value)
         else:
-            number = generate_integer(whole_number)
+            number = generate_integer(numeric_value)
 
     print(number)
 
 
-def generate_float(whole: int, fraction: int) -> str:
+def generate_float(numeric_value: float) -> str:
     """generates string representation of floating point numbers"""
+    fractional = Decimal(str(numeric_value)) % 1
+    whole = int(numeric_value)
 
-    float = generate_integer(whole) + " Point " + generate_fractional(fraction)
+    float = generate_integer(whole) + " Point " + generate_fractional(fractional)
 
     return float
 
 
-def generate_fractional(number: int) -> str:
+def generate_fractional(fractional: Decimal) -> str:
     """generates the string representation of the fractional part of a float"""
 
     decimal = ""
     n = 1
-    number = number * (10 ** (len(str(number)[2::])))
+    number = fractional * (10 ** (len(str(fractional)[2::])))
 
-    while number // n:
+    while number >= n:  # uses mod operator to extract digits from integer value
         decimal = number_dict["single"][(number // n) % 10] + " " + decimal
         n *= 10
 
@@ -89,7 +90,7 @@ def generate_fractional(number: int) -> str:
 def generate_integer(number: int) -> str:
     """generates the string representation on an integer"""
 
-    digits = len(str(abs(number)))  # key to the pattern in the dictionary
+    digits = int(log10(number) + 1)  # key to the pattern in the dictionary
     n = ""
 
     # slice and pass string patterns to generate_ functions to create text output
@@ -157,4 +158,4 @@ def gen_hundreds(number: int) -> str:
     return t
 
 
-number_names(999999.999999)
+number_names(10900)
